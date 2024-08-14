@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-7fV9x2Aua0m7L5t5N+dyNbUdL88k0A8BzwJe4f7sF3ajJpZIC4WReMChujVf7reZIw7LnbWShs2qVhRO5y5iJw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Changa&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+        body {
+            font-family: "Changa", sans-serif;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 250px;
+            position: fixed;
+            z-index: 100;
+            top: 0;
+            right: 0;
+            background-color: #0A284E;
+            overflow-x: hidden;
+            transition: width 0.5s ease;
+            padding-top: 30px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media screen and (max-width: 992px) {
+            .sidenav {
+                width: 0;
+            }
+        }
+
+        .navbar-toggler {
+            color: #fff;
+            border: none;
+        }
+
+        .navbar-toggler:focus {
+            outline: none;
+        }
+
+        .container-main {
+            padding-right: 0; /* تأكد من عدم وجود padding-right افتراضي */
+            transition: padding-right 0.5s;
+            
+        }
+
+        @media screen and (min-width: 992px) {
+            .container-main {
+                padding-right: 250px; /* زيادة padding-right لتفادي تغطية المحتوى */
+            }
+        }
+
+        .sidenav a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #fff;
+            left: auto;
+            position: static;
+            
+            display: flex;
+            transition: 0.3s;
+        }
+
+        .sidenav a:hover {
+            color: #fff;
+        }
+            @media (min-width: 992px) {
+        .customers-table {
+            width: calc(100% - 250px); /* جعل عرض الجدول يأخذ باقي المساحة عند فتح الحافة الجانبية */
+            margin-left: 250px; /* تحريك الجدول إلى اليمين لتفادي تغطية الحافة الجانبية */
+        }
+    }
+
+    /* تعديل حجم الجدول على شاشات صغيرة */
+    @media (max-width: 991px) {
+        .customers-table {
+            width: 100%; /* جعل الجدول يأخذ العرض الكامل عندما تكون الشاشة صغيرة */
+            margin-left: 0; /* إعادة تعيين التباعد الأيسر للجدول */
+        }
+    }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            left: 25px;
+            font-size: 36px;
+            margin-right: 50px;
+        }
+
+        .nav-icons {
+            display: none;
+        }
+
+        .nav-icons.active {
+            display: block;
+            cursor: pointer;
+        }
+
+        .navbar {
+            background-color: #fff; /* لون خلفية Navbar */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* إضافة ظل للناف بار */
+            position: fixed;
+            width: 100%; /* عرض الناف بار على الشاشة بالكامل */
+            z-index: 2; /* تحديد الترتيب الظاهري فوق الصفحة */
+            top: 0; /* تثبيت الناف بار في أعلى الصفحة */
+            text-align: center; /* محاذاة العناصر في الناف بار بالوسط */
+        }
+
+        .navbar-brand {
+            color: #0A284E; /* لون النص للعلامة التجارية */
+            font-weight: bold; /* سمك الخط */
+            padding: 15px 0; /* تباعد النص داخل العلامة التجارية */
+            display: block; /* عرض العلامة التجارية كعنصر بلوك */
+        }
+
+        .navbar-nav {
+            margin: 0 auto; /* توسيط الروابط داخل الناف بار */
+        }
+
+        .nav-item {
+            display: inline-block; /* عرض العناصر كعناصر متجانسة */
+            margin-left: 20px; /* تباعد بين العناصر */
+            text-align: center;
+            justify-content: center;
+        }
+
+        .nav-link {
+            color: #0A284E; /* لون النص للروابط */
+            font-weight: 500; /* سمك الخط */
+            text-decoration: none; /* إزالة تزيين الروابط */
+            padding: 15px 10px; /* تباعد النص داخل الروابط */
+            transition: all 0.3s ease; /* تحويل التحولات لجميع الخصائص */
+            text-align: center;
+            justify-content: center;
+        }
+
+        .nav-link:hover {
+            color: #fff; /* لون النص عند التحويم */
+            border-radius: 5px; /* تدوير الزوايا للروابط عند التحويم */
+        }
+
+        .stats-section {
+            padding: 30px ;
+            text-align: center;
+            font-size: small;
+
+        }
+
+        .stats-card1 {
+            background-color: #fff;
+            padding: 8px;
+            margin: 8px;
+            border: 1px solid #0A284E;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .stats-card2 {
+            background-color: #fff;
+            padding: 8px;
+            margin: 8px;
+            border: 1px solid red;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .statss-card2 {
+            background-color: #fff;
+            padding: 8px;
+            margin: 8px;
+            margin-top: 100px;
+            position: relative;
+
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .stats-card3 {
+            background-color: #fff;
+            padding: 8px;
+            margin: 8px;
+            border: 1px solid seagreen;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .stats-card4 {
+            background-color: #fff;
+            padding: 8px;
+            margin: 8px;
+            border: 1px solid #C2E0C6;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .stats-card5 {
+            background-color: #fff;
+            padding: 8px;
+            margin: 8px;
+            border: 1px solid #F5D0E8;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .stats-card6 {
+            background-color: #fff;
+            padding: 8px;
+            margin: 8px;
+            border: 1px solid rgb(204,153, 255);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-size: 6px;
+        }
+
+        .requests-section {
+            padding: 50px 0;
+            text-align: right;
+        }
+        .requestss-section {
+            padding:30px 0;
+            margin-top: 40px;
+            text-align: right;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 20px;
+            padding: 20px;
+            width: auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            color: #333;
+            
+        }
+
+        thead {
+            background-color: #0A284E;
+            color: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            font-weight: bold;
+            font-size: 16px;
+            background-color: #0A284E;
+            color: white;
+        }
+
+        td {
+            background-color: #ffffff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #e2e6ea;
+        }
+
+        .actions {
+            text-align: center;
+        }
+
+        .action-button {
+            background: none;
+            border: none;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 0 5px;
+        }
+
+     
+      
+        @media (max-width: 768px) {
+            thead {
+                display: none;
+            }
+            tr {
+                display: block;
+                margin-bottom: 10px;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                overflow: hidden;
+                text-align: center;
+                background-color: #ffffff;
+                justify-self: center;
+
+                direction: rtl;
+            }
+            td {
+                display: block;
+                text-align: left;
+                position: relative;
+                padding: 12px;
+                border: none;
+                border-bottom: 1px solid #ddd;
+                font-size: 14px;
+            }
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                right: 0;
+                width: 40%;
+                padding: 10px;
+                font-weight: bold;
+                background-color: #007bff;
+                color: white;
+                border-left: 1px solid #ddd;
+                border-bottom: 1px solid #ddd;
+                white-space: nowrap;
+                text-align: left;
+            }
+
+            .actions {
+                display: block;
+                text-align: left;
+                position: relative;
+                padding: 12px;
+                border: none;
+                border-bottom: 1px solid #ddd;
+                font-size: 14px;
+            }
+
+            .action-button {
+                font-size: 20px;
+                text-align: center;
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-white bg-white shadow-sm fixed">
+    <div class="container">
+        <a class="navbar-brand" href="index.html" style="color: #0A284E;">عوده</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+</button>
+     
+    </div>
+ </nav>
+ <script>
+
+</script>
+ <div class="sidenav">
+    <div style="text-align: center; margin-bottom: 30px; ">
+        <img src="images/Asset 1.png"  width="100px" style="justify-content: center;  margin: auto;" alt="">
+
+    </div>
+ 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+
+    <a href="#" id="set" >    <i class="fas fa-cog" style="margin-top: 3px ; padding: 2px;"></i>
+الاعدادات    </a>
+   
+</div>
+<script>
+
+document.getElementById('set').addEventListener('click', function(e) {
+    e.preventDefault(); // لمنع الانتقال إلى الرابط
+
+    // إخفاء جميع الأقسام
+    document.getElementById('stats-section').style.display = 'none';
+    document.getElementById('card-section').style.display = 'none';
+    document.getElementById('table').style.display = 'none';
+
+    // عرض أزرار جديدة
+    document.getElementById('home-button').style.display = 'none';
+    document.getElementById('add').style.display = 'block';
+});
+
+// عند الضغط على زر "الرئيسية"
+document.getElementById('home-button').addEventListener('click', function(e) {
+    e.preventDefault(); // لمنع الانتقال إلى الرابط
+
+    // عرض قسم الإحصائيات وإخفاء الأقسام الأخرى
+    document.getElementById('stats-section').style.display = 'block';
+    document.getElementById('card-section').style.display = 'none';
+    document.getElementById('table').style.display = 'none';
+
+    // إخفاء زر "الرئيسية" وعرض زر "مشاريع تم إضافتها"
+    document.getElementById('home-button').style.display = 'none';
+    document.getElementById('add').style.display = 'block';
+});
+
+document.getElementById('add').addEventListener('click', function(e) {
+    e.preventDefault(); // لمنع الانتقال إلى الرابط
+
+    // إخفاء قسم الإحصائيات وعرض قسم الكروت
+    document.getElementById('stats-section').style.display = 'none';
+    document.getElementById('card-section').style.display = 'block';
+    document.getElementById('table').style.display = 'none';
+
+    // إخفاء زر "مشاريع تم إضافتها" وعرض زر "الرئيسية"
+    document.getElementById('add').style.display = 'none';
+    document.getElementById('home-button').style.display = 'block';
+});
+
+</script>
+ <div class="container-main">
+  
+    <div class="stats-section" id="stats-section">
+        <div class="container">
+            <div class="requestss-section">
+                <div class="container">
+                    <h2> الاحصائيات</h2>
+                </div>
+            </div>    
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="stats-card1">
+                        <h5> اجمالي الطلبات: 234</h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stats-card2">
+                        <h5>  مشاريع تم رفعها: 36</h4>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stats-card3">
+                        <h5> عدد المستخدمين : 257</h3>
+                    </div>
+                </div>
+            </div>
+            <!-- الأسطر الإضافية للإحصائيات -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="stats-card4">
+                        <h5>تم الموافقه: 0</h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stats-card5">
+                        <h5>تم البيع: 0 </h3>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stats-card6">
+                        <h5>خيارات اخري </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+  <style>
+    
+.faq-item {
+cursor: pointer;
+padding: 10px;
+border-radius: 5px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+transition: background-color 0.3s;
+}
+
+.answer {
+display: none;
+margin-top: 10px;
+padding: 15px;
+background-color: #fff;
+border-radius: 5px;
+}
+
+.toggle-icon {
+display: flex;
+justify-content: center;
+align-items: center;
+width: 20px;
+height: 20px;
+background-color: orange;
+color: white;
+border-radius: 50%;
+font-size: 14px;
+transition: background-color 0.3s;
+}
+
+.toggle-icon:hover {
+background-color: white;
+color: orange;
+}
+  </style>
+      <style>
+     
+
+        .containerr {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+        }
+  
+ 
+</style>
+        
+<style>
+    .registration-form-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+    }
+  
+    .form-text-section {
+        width: 50%;
+        padding-right: 10px;
+        margin-top: 75px;
+    }
+  
+    .form-text-section h2 {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+  
+    .form-text-section p {
+        font-size: 18px;
+        color: #666;
+        margin-bottom: 20px;
+    }
+  
+    .form-group {
+        margin-bottom: 20px;
+    }
+  
+    .form-group label {
+        display: block;
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 5px;
+    }
+  
+    .form-group input, .form-group textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+        color: #333;
+    }
+  
+    .form-group textarea {
+        height: 100px;
+    }
+  
+    .form-image-section {
+        width: 50%;
+        text-align: center;
+    }
+  
+    .form-image-section img {
+        width: 80%;
+        height: auto;
+        margin-top: 100px;
+        border-radius: 10px;
+    }
+  
+    .form-submit-btn {
+        display: block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #00A99D;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+  
+    @media screen and (max-width: 768px) {
+        .registration-form-container {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+  
+        .form-text-section, .form-image-section {
+            width: 100%;
+            padding: 0;
+        }
+  
+        .form-text-section {
+            margin-bottom: 20px;
+        }
+    }
+  </style>
+
+    <div class="stats-section" id="set" style="margin-top: 80px;" >
+        <div class="container">
+              
+            <div class="faq">
+
+                <h2 style="text-align: right;">   <i class="fas fa-cog" style="margin-top: 3px ; padding: 2px;"></i>   الاعدادات</h2>
+
+                <br>
+                <div style="font-size: 25px;" class="faq-item" onclick="toggleAnswer(3)">الصفحه الرئيسية <span class="toggle-icon" id="toggle-icon-3">+</span></div>
+                <div class="answer" id="answer-3">Answer 3</div>
+                <div style="font-size: 25px;"  class="faq-item" onclick="toggleAnswer(1)"> امكانيه تعديل صفحه من نحن <span class="toggle-icon" id="toggle-icon-1">+</span></div>
+                <div class="answer" id="answer-1">
+                    <div class="containerr services inner"  id="service">
+                  
+                  
+                          
+                          <div class="registration-form-container">
+                              <div class="form-image-section">
+                                  <img id="current-image" src="images/pexels-alex-qian-1180283-2343465.jpg" alt="صورة المبنى">
+                              </div>
+                              <div class="form-text-section">
+                                  <h2 id="form-title">تضع الشركة نخبة من الخبراء والمختصين</h2>
+                                  <p id="form-description">تدرس كافة العروض والمشاريع في السوق العقاري والاختيار الأمثل والأسس والكثر لخدمة العملاء والمستثمرين بناءً على أسس ومعايير علمية.</p>
+                          
+                                  <form id="update-form">
+                                      <div class="form-group">
+                                          <label for="title">العنوان</label>
+                                          <input type="text" id="title" name="title" placeholder="تضع الشركة نخبة من الخبراء والمختصين" value="تضع الشركة نخبة من الخبراء والمختصين">
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="description">الوصف</label>
+                                          <textarea id="description" name="description" placeholder="تدرس كافة العروض والمشاريع في السوق العقاري والاختيار الأمثل والأسس والكثر لخدمة العملاء والمستثمرين بناءً على أسس ومعايير علمية.">تدرس كافة العروض والمشاريع في السوق العقاري والاختيار الأمثل والأسس والكثر لخدمة العملاء والمستثمرين بناءً على أسس ومعايير علمية.</textarea>
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="image-upload">تحميل صورة جديدة</label>
+                                          <input type="file" id="image-upload" name="image-upload" accept="image/*" onchange="previewImage(event)">
+                                      </div>
+                                      <button type="submit" class="form-submit-btn">تحديث</button>
+                                  </form>
+                              </div>
+                          </div>
+                          
+                         
+                         </div>
+
+            
+            </div>
+            <div style="font-size: 25px;" class="faq-item" onclick="toggleAnswer(2)">     امكانيه تعديل صفحه العرض <span class="toggle-icon" id="toggle-icon-2">+</span></div>
+            <div class="answer" id="answer-2"
+            >
+            
+            <div class="features-section">
+                <div class="feature-item">
+                    <i class="fas fa-handshake"></i>
+                    <input type="text" value="1 سنة" class="feature-input">
+                    <input type="text" value="اتحاد ملاك مجاناً" class="feature-input">
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-lightbulb"></i>
+                    <input type="text" value="5 سنوات" class="feature-input">
+                    <input type="text" value="كهرباء وسباكة" class="feature-input">
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-tools"></i>
+                    <input type="text" value="20 سنة" class="feature-input">
+                    <input type="text" value="هيكل إنشائي" class="feature-input">
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-plug"></i>
+                    <input type="text" value="25 سنة" class="feature-input">
+                    <input type="text" value="قواطع وأفياش" class="feature-input">
+                </div>
+            </div>
+            <button class="edit-button">تعديل</button>
+
+            <style>
+                .features-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.feature-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    width: 200px;
+}
+
+.feature-item i {
+    font-size: 24px;
+    color: #007bff;
+}
+
+.feature-input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    background-color: #fff;
+}
+
+.feature-input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.edit-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+}
+            </style>
+
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <div class="container">
+    <div class="box-container">
+        <div class="row">
+            <div class="col-md-4 features-title" style="color:#A19781 ;">
+                الخصائص والمميزات
+            </div>
+            <div class="col-md-4">
+                <ul class="features-list">
+                    <li class="item"><input type="text" class="input-item" value="البند 1"></li>
+                    <li class="item"><input type="text" class="input-item" value="البند 2"></li>
+                    <li class="item"><input type="text" class="input-item" value="البند 3"></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <ul class="features-list">
+                <li class="item"><input type="text" class="input-item" value="البند 1"></li>
+                <li class="item"><input type="text" class="input-item" value="البند 2"></li>
+                <li class="item"><input type="text" class="input-item" value="البند 3"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+  </div>
+<style>
+    .item {
+    margin-bottom: 10px;
+}
+
+.input-item {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.input-item:focus {
+    border-color: #007bff;
+    outline: none;
+}
+</style>
+  <br>
+  <br>
+  <br>
+
+
+            </div>
+        
+        </div><!-- details -->
+            <!-- الأسطر الإضافية للإحصائيات -->
+            
+        </div>
+    </div>
+
+    <script>
+        function previewImage(event) {
+          var reader = new FileReader();
+          reader.onload = function() {
+            var output = document.getElementById('current-image');
+            output.src = reader.result;
+          }
+          reader.readAsDataURL(event.target.files[0]);
+        }
+      
+        document.getElementById('update-form').addEventListener('submit', function(e) {
+          e.preventDefault();
+      
+          var title = document.getElementById('title').value;
+          var description = document.getElementById('description').value;
+      
+          document.getElementById('form-title').textContent = title;
+          document.getElementById('form-description').textContent = description;
+        });
+      </script>
+<script>
+    
+    function toggleAnswer(id) {
+        const answer = document.getElementById(`answer-${id}`);
+        const toggleIcon = document.getElementById(`toggle-icon-${id}`);
+        if (answer.style.display === 'block') {
+            answer.style.display = 'none';
+            toggleIcon.innerText = '+';
+        } else {
+            answer.style.display = 'block';
+            toggleIcon.innerText = '-';
+        }
+    }
+</script>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&family=Changa&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+      
+      body{
+          font-family: "Cairo", sans-serif;
+font-optical-sizing: auto;
+font-style: normal;
+font-variation-settings:  "slnt" 0;
+direction: rtl; /* تحديد الاتجاه من اليمين إلى اليسار */
+
+      }
+ 
+
+.box-container {
+   border: 2px solid #ddd; /* إطار خفيف وأنيق */
+   padding: 30px; /* تباعد داخلي مريح */
+   background-color: #fff; /* خلفية بيضاء نقية */
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* ظل ناعم لإضفاء عمق */
+   border-radius: 10px; /* زوايا مستديرة */
+   box-sizing: border-box; /* احتساب الإطار ضمن الأبعاد */
+   max-width: 900px; /* تحديد عرض البوكس */
+   margin: auto; /* تمركز البوكس */
+}
+
+.features-title {
+   font-size: 28px; /* تكبير حجم النص */
+   font-weight: bold; /* جعل النص غامقًا */
+   color: #333; /* لون النص */
+   margin-bottom: 20px; /* تباعد سفلي */
+   text-align: center; /* توسيط النص */
+   border-bottom: 2px solid #ddd; /* خط سفلي أنيق */
+   padding-bottom: 10px; /* تباعد داخلي سفلي */
+}
+
+.features-list {
+   list-style-type: none; /* إزالة النقاط الافتراضية */
+   padding-right: 0; /* إزالة التباعد من اليمين */
+   padding-left: 0; /* إزالة التباعد من اليسار */
+}
+
+.features-list li {
+   position: relative; /* لتنسيق الأيقونة المخصصة */
+   padding-right: 25px; /* تباعد داخلي قبل النص من اليمين */
+   margin-bottom: 15px; /* تباعد بين العناصر */
+   font-size: 16px; /* حجم الخط */
+   color: #555; /* لون النص */
+}
+
+.features-list li::before {
+   content: "\2022"; /* رمز الدائرة */
+   position: absolute; 
+   right: 0; 
+   top: 0;
+   color: #A19781; /* لون الدائرة */
+   font-size: 20px; /* حجم الدائرة */
+   line-height: 1; /* ضبط محاذاة الدائرة */
+}
+ </style>
+</body>
+</html>
